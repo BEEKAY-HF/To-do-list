@@ -1,0 +1,269 @@
+/* General Styling */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background: #ffffff;
+  color: #333;
+  transition: background 0.3s, color 0.3s;
+  text-align: center;
+}
+
+body.dark-mode {
+  background: #121212;
+  color: #e4e4e4;
+}
+
+#app {
+  margin: 2em auto;
+  width: 90%;
+  max-width: 600px;
+  padding: 20px;
+  border-radius: 15px;
+  background: linear-gradient(135deg, #f6d365, #fda085);
+  box-shadow: 0px 4px 6px rgba(218, 165, 32, 0.232);
+  transition: background 0.3s;
+}
+
+body.dark-mode #app {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  box-shadow: 0px 4px 5px rgba(0, 0, 255, 0.204);
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+/* Input Container */
+.input-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  background-color: #fff;
+  border: 1px solid #000;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+#taskInput {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  outline: none;
+  font-size: 1em;
+}
+
+#addTaskButton {
+  background-color: #000;
+  color: #fff;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+  font-size: 1em;
+  text-align: center;
+}
+
+#addTaskButton:hover {
+  background-color: #fff;
+  color: #000;
+}
+
+/* Task List */
+#taskList {
+  list-style: none;
+  padding: 0;
+}
+
+#taskList li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  margin: 15px 0;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 10px;
+}
+
+body.dark-mode #taskList li {
+  background-color: rgba(50, 50, 70, 0.9);
+}
+
+input {
+  width: 70%;
+}
+
+button {
+  margin: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  border: 1px solid #000;
+  background-color: #000;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+button:hover {
+  background-color: #fff;
+  color: #000;
+  transition: 3s ease-in-out;
+}
+
+/* Checkbox */
+.checkbox {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  appearance: none;
+  cursor: pointer;
+  margin-right: 10px;
+  background-color: transparent;
+  transition: background-color 0.3s;
+}
+
+.checkbox.completed {
+  background-color: hsl(120, 68%, 39%);
+}
+
+.checkbox.uncompleted {
+  background-color: #f8170f;
+}
+
+/* Quote Box */
+#quoteBox {
+  margin: 20px 0;
+  font-size: 1.2em;
+  font-style: italic;
+  color: #000;
+  transition: opacity 0.5s;
+  position: relative;
+  overflow: hidden;
+}
+
+#quoteText {
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  text-align: center;
+  animation: slideIn 3s ease-in-out infinite;
+}
+
+@keyframes slideIn {
+  0% {
+    top: 100%;
+    opacity: 0;
+  }
+  50% {
+    top: 50%;
+    opacity: 1;
+  }
+  100% {
+    top: 100%;
+    opacity: 0;
+  }
+}
+
+/* Dark Mode Toggle */
+#darkModeToggle {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.round-toggle {
+  width: 40px;
+  height: 20px;
+  background-color: #ccc;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+}
+
+.round-toggle::before {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background-color: #000;
+  border-radius: 50%;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  transition: 0.3s;
+}
+
+.round-toggle.checked {
+  background-color: #000;
+}
+
+.round-toggle.checked::before {
+  left: 22px;
+}
+
+/* Progress Bar */
+#progressBar {
+  position: relative;
+  width: 100%;
+  height: 25px;
+  background-color: #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 20px 0;
+}
+
+#progressFill {
+  height: 100%;
+  width: 0;
+  background-color: #2ba22b;
+  transition: width 0.5s, background-color 0.5s;
+}
+
+#progressPercentage {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 14px;
+  color: #fff;
+  font-weight: bold;
+  line-height: 25px;
+}
+/* Responsive Design */
+@media (max-width: 768px){
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid #000;
+    border-radius: 25px;
+    overflow: hidden;
+  }
+  
+  #taskInput {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    outline: none;
+    font-size: 1em;
+  }
+  
+  #addTaskButton {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 15px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+    font-size: 1em;
+    text-align: center;
+  }
+  
+
+  
+}

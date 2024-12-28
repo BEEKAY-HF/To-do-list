@@ -3,9 +3,33 @@
 <head>
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0">
- <title>To do list</title>
+ <title>Task Manager</title>
+ <link rel="stylesheet" href="to-do-list.css">
 </head>
 <body>
- 
+  <div id="app">
+    <h1>Task Manager</h1>
+    <div class="input-container">
+      <input type="text" id="taskInput" placeholder="Enter a task">
+      <div id="addTaskButton">Add Task</div>
+    </div>
+    <ul id="taskList"></ul>
+
+    <!-- Progress bar -->
+    <div id="progressBar">
+      <div id="progressFill"></div>
+      <span id="progressPercentage"></span>
+    </div>
+    <div id="quoteBox">
+      <p id="quoteText">Stay motivated!</p>
+    </div>
+
+    <!-- Toggle bar -->
+    <div id="darkModeToggle">
+      <div id="toggleDarkMode" class="round-toggle"></div>
+      <span id="darkModeText">Dark Mode</span>
+    </div>
+  </div>
+<script src="to-do-list.js"></script>                                                                                                                                           
 </body>
 </html>
