@@ -7,9 +7,8 @@ document.addEventListener('DOMContentLoaded', function () {
   const progressBar = document.getElementById('progressBar');
   const progressFill = document.getElementById('progressFill');
   const progressPercentage = document.getElementById('progressPercentage');
-  const quoteBox = document.getElementById('quoteBox'); 
+  const quoteBox = document.getElementById('quoteBox');
 
-  // Array of motivational quotes
   const quotes = [
     "Believe in yourself and all that you are.",
     "The only way to do great work is to love what you do.",
@@ -22,7 +21,6 @@ document.addEventListener('DOMContentLoaded', function () {
     "Dream bigger. Do bigger."
   ];
 
-  // Function to load tasks from local storage
   const loadTasks = () => {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     taskList.innerHTML = tasks.map(createTaskHTML).join('');
@@ -30,26 +28,27 @@ document.addEventListener('DOMContentLoaded', function () {
     applyDarkModeStyles();
   };
 
-  // Function to save tasks to local storage
   const saveTasks = (tasks) => {
     localStorage.setItem('tasks', JSON.stringify(tasks));
   };
 
-  // Function to create task HTML
   const createTaskHTML = (task) => {
     const completedClass = task.completed ? 'completed' : 'uncompleted';
     return `
       <li>
         <input type="checkbox" class="checkbox ${completedClass}" data-index="${task.index}" ${task.completed ? 'checked' : ''}>
         <span>${task.text}</span>
-        <button class="completeButton" data-index="${task.index}">Completed</button>
-        <button class="uncompleteButton" data-index="${task.index}">Uncompleted</button>
-        <button class="deleteButton" data-index="${task.index}">Delete</button>
+        <button class="actionButton" data-index="${task.index}" title="Actions">
+          <div>
+            <span class="symbol complete" title="Mark as Completed">✔️</span>
+            <span class="symbol uncomplete" title="Mark as Uncompleted">❌</span>
+            <span class="symbol delete" title="Delete Task">🗑️</span>
+          </div>
+        </button>
       </li>
     `;
   };
 
-  // Add a new task
   addTaskButton.addEventListener('click', () => {
     const text = taskInput.value.trim();
     if (text) {
@@ -66,27 +65,31 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // Handle task actions (complete, uncomplete, delete)
   taskList.addEventListener('click', (event) => {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-    const index = parseInt(event.target.dataset.index, 10);
+    const target = event.target;
+    const parentButton = target.closest('.actionButton');
 
-    if (event.target.classList.contains('checkbox')) {
+    if (parentButton) {
+      const index = parseInt(parentButton.dataset.index, 10);
+      if (target.classList.contains('complete')) {
+        tasks[index].completed = true;
+      } else if (target.classList.contains('uncomplete')) {
+        tasks[index].completed = false;
+      } else if (target.classList.contains('delete')) {
+        tasks.splice(index, 1);
+        tasks = tasks.map((task, newIndex) => ({ ...task, index: newIndex }));
+      }
+      saveTasks(tasks);
+      loadTasks();
+    } else if (target.classList.contains('checkbox')) {
+      const index = parseInt(target.dataset.index, 10);
       tasks[index].completed = !tasks[index].completed;
-    } else if (event.target.classList.contains('deleteButton')) {
-      tasks.splice(index, 1);
-      tasks = tasks.map((task, newIndex) => ({ ...task, index: newIndex })); // Recalculate indices
-    } else if (event.target.classList.contains('completeButton')) {
-      tasks[index].completed = true;
-    } else if (event.target.classList.contains('uncompleteButton')) {
-      tasks[index].completed = false;
+      saveTasks(tasks);
+      loadTasks();
     }
-
-    saveTasks(tasks);
-    loadTasks();
   });
 
-  // Update progress bar and its color
   const updateProgress = (tasks) => {
     const totalTasks = tasks.length;
     const completedTasks = tasks.filter(task => task.completed).length;
@@ -95,11 +98,9 @@ document.addEventListener('DOMContentLoaded', function () {
     progressPercentage.textContent = `${progress}%`;
     progressFill.style.width = `${progress}%`;
 
-    // Change progress bar color
     progressFill.style.backgroundColor = progress < 50 ? '#d9534f' : '#5cb85c';
   };
 
-  // Dark mode toggle
   const applyDarkModeStyles = () => {
     darkModeText.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
   };
@@ -107,21 +108,16 @@ document.addEventListener('DOMContentLoaded', function () {
   darkModeToggle.addEventListener('click', () => {
     document.body.classList.toggle('dark-mode');
     applyDarkModeStyles();
-    loadTasks(); 
+    loadTasks();
   });
 
-  // Function to update motivational quotes
   const updateQuote = () => {
     const randomIndex = Math.floor(Math.random() * quotes.length);
     quoteBox.textContent = `"${quotes[randomIndex]}"`;
   };
 
-  // Display the first quote
   updateQuote();
-
-  // Change quote every 3 seconds
   setInterval(updateQuote, 3000);
 
-  // Initial page load
   loadTasks();
 });
