@@ -8,28 +8,30 @@
 </head>
 <body>
   <div id="app">
-    <h1>Task Manager</h1>
-    <div class="input-container">
-      <input type="text" id="taskInput" placeholder="Enter a task">
-      <div id="addTaskButton">Add Task</div>
+    <h1>Task Manager</h1> 
+    
+    <!-- Input and Task List -->
+     <div class="input-container">
+      <input type="text" id="taskInput" placeholder="Add a new task...">
+      <button id="addTaskButton">Add Task</button>
     </div>
     <ul id="taskList"></ul>
-
-    <!-- Progress bar -->
+  
+    <!-- Progress Bar -->
     <div id="progressBar">
       <div id="progressFill"></div>
-      <span id="progressPercentage"></span>
+      <div id="progressPercentage">0%</div>
     </div>
-    <div id="quoteBox">
-      <p id="quoteText">Stay motivated!</p>
-    </div>
-
-    <!-- Toggle bar -->
+     
+    <!-- Quote Box -->
+     <div id="quoteBox"></div>
+    
+    <!-- Dark Mode Toggle -->
     <div id="darkModeToggle">
       <div id="toggleDarkMode" class="round-toggle"></div>
-      <span id="darkModeText">Dark Mode</span>
+      <span id="darkModeText" class="dark-mode-text"></span>
     </div>
-  </div>
+  </div> 
 <script src="to-do-list.js"></script>                                                                                                                                           
 </body>
 </html>

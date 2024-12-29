@@ -2,12 +2,12 @@ document.addEventListener('DOMContentLoaded', function () {
   const taskInput = document.getElementById('taskInput');
   const addTaskButton = document.getElementById('addTaskButton');
   const taskList = document.getElementById('taskList');
-  const darkModeToggle = document.getElementById('toggleDarkMode');
-  const darkModeText = document.getElementById('darkModeText');
+  const darkModeToggle = document.querySelector('.round-toggle');
   const progressBar = document.getElementById('progressBar');
   const progressFill = document.getElementById('progressFill');
   const progressPercentage = document.getElementById('progressPercentage');
   const quoteBox = document.getElementById('quoteBox');
+  const modeText = document.getElementById('darkModeText'); // Mode text element
 
   const quotes = [
     "Believe in yourself and all that you are.",
@@ -25,7 +25,6 @@ document.addEventListener('DOMContentLoaded', function () {
     const tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     taskList.innerHTML = tasks.map(createTaskHTML).join('');
     updateProgress(tasks);
-    applyDarkModeStyles();
   };
 
   const saveTasks = (tasks) => {
@@ -69,7 +68,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
     const target = event.target;
     const parentButton = target.closest('.actionButton');
-
+    
     if (parentButton) {
       const index = parseInt(parentButton.dataset.index, 10);
       if (target.classList.contains('complete')) {
@@ -101,14 +100,24 @@ document.addEventListener('DOMContentLoaded', function () {
     progressFill.style.backgroundColor = progress < 50 ? '#d9534f' : '#5cb85c';
   };
 
-  const applyDarkModeStyles = () => {
-    darkModeText.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+  const toggleDarkMode = () => {
+    document.body.classList.toggle('dark-mode');
+    darkModeToggle.classList.toggle('checked');
+    
+    // Toggle the circle background color inside the toggle
+    darkModeToggle.querySelector('::before').classList.toggle('dark-mode-toggle-circle');
+    
+    // Update mode text dynamically with animation
+    modeText.style.opacity = '0'; // Start opacity at 0
+    setTimeout(() => {
+      modeText.textContent = document.body.classList.contains('dark-mode') ? 'Light Mode' : 'Dark Mode';
+      modeText.style.opacity = '1'; // Fade in
+    }, 300);
   };
 
   darkModeToggle.addEventListener('click', () => {
-    document.body.classList.toggle('dark-mode');
-    applyDarkModeStyles();
-    loadTasks();
+    toggleDarkMode();
+    loadTasks(); // Reapply dark mode styles to tasks
   });
 
   const updateQuote = () => {
